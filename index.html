@@ -1,24 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photo Booth</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <h1>Photo Booth</h1>
 
-  <div class="camera-wrapper">
-    <video id="camera" autoplay playsinline></video>
-    <div id="countdown"></div>
-  </div>
-
-  <br>
-
+  <video id="camera" autoplay playsinline></video>
+  <canvas id="canvas" style="display:none;"></canvas>
+  <div id="countdown" style="font-size: 60px; text-align:center; display:none;"></div>
   <button id="btn">Take Photo</button>
-
-  <canvas id="canvas"></canvas>
 
   <script src="script.js"></script>
 </body>

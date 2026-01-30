@@ -1,14 +1,17 @@
-alert("test ver2.3")
+alert("test ver2.4")
+// Elements
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const button = document.getElementById("btn");
 const countdown = document.getElementById("countdown");
 
+// Template
 const template = new Image();
 template.src = "template.png";
 template.crossOrigin = "anonymous";
 
+// Settings
 const TOTAL_PHOTOS = 3;
 let photos = [];
 
@@ -26,7 +29,7 @@ function capturePhoto() {
   photos.push(tempCanvas.toDataURL("image/png"));
 }
 
-// Countdown + capture
+// Countdown + capture sequence
 function startSession(photoIndex = 0) {
   let count = 3;
   countdown.style.display = "block";
@@ -43,6 +46,7 @@ function startSession(photoIndex = 0) {
       capturePhoto();
 
       if (photoIndex + 1 < TOTAL_PHOTOS) {
+        // Small delay before next photo
         setTimeout(() => startSession(photoIndex + 1), 1000);
       } else {
         drawTemplate();
@@ -79,13 +83,15 @@ function drawTemplate() {
       // First item is template
       ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
-      // The rest are photos
+      // Define slots
+      const slots = [
+        { x: 126, y: 124, w: 940, h: 940 },
+        { x: 126, y: 1174, w: 940, h: 940 },
+        { x: 126, y: 2224, w: 940, h: 940 }
+      ];
+
+      // Draw each photo
       loaded.slice(1).forEach((img, i) => {
-        const slots = [
-          { x: 126, y: 124, w: 940, h: 940 },
-          { x: 126, y: 1174, w: 940, h: 940 },
-          { x: 126, y: 2224, w: 940, h: 940 }
-        ];
         ctx.drawImage(img, slots[i].x, slots[i].y, slots[i].w, slots[i].h);
       });
 
@@ -95,7 +101,7 @@ function drawTemplate() {
     .catch(err => console.error(err));
 }
 
-// Button
+// Button click
 button.onclick = () => {
   canvas.style.display = "none";
   photos = [];
