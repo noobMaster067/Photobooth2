@@ -1,4 +1,4 @@
-alert("test ver2.0")
+alert("test ver2.3")
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -53,33 +53,46 @@ function startSession(photoIndex = 0) {
 
 // Draw template + photos
 function drawTemplate() {
-  if (!template.complete) {
-    template.onload = drawTemplate;
-    return;
-  }
-
   canvas.width = 1200;
   canvas.height = 3600;
   canvas.style.display = "block";
 
-  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+  // Wait for template to load
+  const loadTemplate = new Promise((resolve, reject) => {
+    if (template.complete) resolve();
+    else template.onload = () => resolve();
+    template.onerror = () => reject("Template failed to load");
+  });
 
-  const slots = [
-    { x: 126, y: 124, w: 940, h: 940 },
-    { x: 126, y: 1174, w: 940, h: 940 },
-    { x: 126, y: 2224, w: 940, h: 940 }
-  ];
-
-  photos.forEach((src, i) => {
+  // Wait for all photos to load
+  const loadPhotos = photos.map(src => new Promise((resolve, reject) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = src;
-    img.onload = () => {
-      ctx.drawImage(img, slots[i].x, slots[i].y, slots[i].w, slots[i].h);
-    };
-  });
+    img.onload = () => resolve(img);
+    img.onerror = () => reject("Photo failed to load");
+  }));
 
-  photos = [];
+  // Draw everything once all loaded
+  Promise.all([loadTemplate, ...loadPhotos])
+    .then(loaded => {
+      // First item is template
+      ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+
+      // The rest are photos
+      loaded.slice(1).forEach((img, i) => {
+        const slots = [
+          { x: 126, y: 124, w: 940, h: 940 },
+          { x: 126, y: 1174, w: 940, h: 940 },
+          { x: 126, y: 2224, w: 940, h: 940 }
+        ];
+        ctx.drawImage(img, slots[i].x, slots[i].y, slots[i].w, slots[i].h);
+      });
+
+      // Clear photos array
+      photos = [];
+    })
+    .catch(err => console.error(err));
 }
 
 // Button
