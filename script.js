@@ -1,3 +1,4 @@
+alert("test ver2.0")
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -6,6 +7,7 @@ const countdown = document.getElementById("countdown");
 
 const template = new Image();
 template.src = "template.png";
+template.crossOrigin = "anonymous";
 
 const TOTAL_PHOTOS = 3;
 let photos = [];
@@ -24,7 +26,7 @@ function capturePhoto() {
   photos.push(tempCanvas.toDataURL("image/png"));
 }
 
-// Countdown + photo logic
+// Countdown + capture
 function startSession(photoIndex = 0) {
   let count = 3;
   countdown.style.display = "block";
@@ -41,7 +43,7 @@ function startSession(photoIndex = 0) {
       capturePhoto();
 
       if (photoIndex + 1 < TOTAL_PHOTOS) {
-        setTimeout(() => startSession(photoIndex + 1), 500);
+        setTimeout(() => startSession(photoIndex + 1), 1000);
       } else {
         drawTemplate();
       }
@@ -49,31 +51,38 @@ function startSession(photoIndex = 0) {
   }, 1000);
 }
 
-// Draw photos on template
+// Draw template + photos
 function drawTemplate() {
-  canvas.width = template.width;
-  canvas.height = template.height;
-  ctx.drawImage(template, 0, 0);
+  if (!template.complete) {
+    template.onload = drawTemplate;
+    return;
+  }
+
+  canvas.width = 1200;
+  canvas.height = 3600;
+  canvas.style.display = "block";
+
+  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
   const slots = [
-    { x: 40, y: 80 },
-    { x: 40, y: 420 },
-    { x: 40, y: 760 }
+    { x: 126, y: 124, w: 940, h: 940 },
+    { x: 126, y: 1174, w: 940, h: 940 },
+    { x: 126, y: 2224, w: 940, h: 940 }
   ];
 
   photos.forEach((src, i) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.src = src;
     img.onload = () => {
-      ctx.drawImage(img, slots[i].x, slots[i].y, 360, 280);
+      ctx.drawImage(img, slots[i].x, slots[i].y, slots[i].w, slots[i].h);
     };
   });
 
-  canvas.style.display = "block";
   photos = [];
 }
 
-// Button click
+// Button
 button.onclick = () => {
   canvas.style.display = "none";
   photos = [];
