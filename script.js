@@ -1,4 +1,4 @@
-alert("slot test 2.8");
+alert("slot test 2.9");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -62,7 +62,7 @@ function drawTemplate() {
   canvas.height = 3600;
 
   // Draw template
-  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(template, 0, 0);
 
   const slots = [
     { x: 130, y: 121, w: 940, h: 940},
