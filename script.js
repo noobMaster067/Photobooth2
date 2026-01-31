@@ -65,7 +65,7 @@ function drawTemplate() {
   ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
   const slots = [
-    { x: 125, y: 123, w: 940, h: 940},
+    { x: 100, y: 123, w: 940, h: 940},
     { x: 126, y: 1173, w: 940, h: 940},
     { x: 126, y: 2223, w: 940, h: 940}
   ];
