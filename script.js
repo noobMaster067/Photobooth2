@@ -1,3 +1,4 @@
+alert("slot test 2.4")
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
