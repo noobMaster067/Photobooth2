@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Photo Booth</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <h1>Photo Booth</h1>
-  <video id="camera" autoplay playsinline></video>
-  <br><br>
-  <button onclick="takePhoto()">Take Photo</button>
+
+  <div class="camera-wrapper">
+    <video id="camera" autoplay playsinline></video>
+    <div id="countdown"></div>
+  </div>
+
+  <br>
+
+  <button id="btn">Take Photo</button>
+
   <canvas id="canvas"></canvas>
 
   <script src="script.js"></script>
