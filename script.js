@@ -74,7 +74,7 @@ function drawTemplate() {
     const img = new Image();
     img.src = src;
     img.onload = () => {
-      ctx.drawImage(img, slots[i].x, slots[i].y, 800, 800);
+      ctx.drawImage(img, slots[i].x, slots[i].y, 940, 940);
     };
   });
 
