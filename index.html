@@ -1,45 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Your Photo</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Photo Booth</title>
 </head>
 <body>
+  <h1>Photo Booth</h1>
+  <video id="camera" autoplay playsinline></video>
+  <br><br>
+  <button onclick="takePhoto()">Take Photo</button>
+  <canvas id="canvas"></canvas>
 
-<h1>Your Photo Strip</h1>
-
-<canvas id="resultCanvas" width="1200" height="3600"></canvas>
-
-<br>
-<a id="emailBtn">Send via Email</a>
-
-<script>
-const canvas = document.getElementById("resultCanvas");
-const ctx = canvas.getContext("2d");
-
-const template = new Image();
-template.src = "template.png";
-
-const photos = JSON.parse(localStorage.getItem("photos"));
-
-template.onload = () => {
-  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
-
-  photos.forEach((src, i) => {
-    const img = new Image();
-    img.src = src;
-    img.onload = () => {
-      ctx.drawImage(img, 200, 400 + i * 1000, 800, 800);
-    };
-  });
-};
-
-document.getElementById("emailBtn").onclick = () => {
-  const data = canvas.toDataURL();
-  window.location.href = `mailto:?subject=My Photobooth Photo&body=Here is my photo!`;
-};
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
