@@ -1,4 +1,4 @@
-alert("slot test 2.7");
+alert("slot test 2.8");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -79,7 +79,7 @@ function drawTemplate() {
   });
 
   // Show canvas
-  canvas.style.display = "block";
+  canvas.style.display = "flex";
 }
 
 // Button
