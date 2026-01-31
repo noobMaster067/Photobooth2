@@ -1,4 +1,4 @@
-alert("slot test 2.5");
+alert("slot test 2.6");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -68,9 +68,9 @@ function drawTemplate() {
   ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
   const slots = [
-    { x: 126, y: 124, w: 940, h: 940},
-    { x: 126, y: 1174, w: 940, h: 940},
-    { x: 126, y: 2224, w: 940, h: 940}
+    { x: 125, y: 123, w: 1005, h: 1005},
+    { x: 126, y: 1173, w: 1005, h: 1005},
+    { x: 126, y: 2223, w: 1005, h: 1005}
   ];
 
   photos.forEach((src, i) => {
