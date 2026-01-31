@@ -68,9 +68,9 @@ function drawTemplate() {
   ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
   const slots = [
-    { x: 200, y: 300 },
-    { x: 200, y: 1300 },
-    { x: 200, y: 2300 }
+    { x: 126, y: 124, w: 940, h: 940},
+    { x: 126, y: 1174, w: 940, h: 940},
+    { x: 126, y: 2224, w: 940, h: 940}
   ];
 
   photos.forEach((src, i) => {
