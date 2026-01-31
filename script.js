@@ -1,4 +1,4 @@
-alert("slot test 2.6");
+alert("slot test 2.7");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -61,16 +61,13 @@ function drawTemplate() {
   canvas.width = 1200;
   canvas.height = 3600;
 
-  // Show canvas
-  canvas.style.display = "block";
-
   // Draw template
   ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
   const slots = [
-    { x: 125, y: 123, w: 1005, h: 1005},
-    { x: 126, y: 1173, w: 1005, h: 1005},
-    { x: 126, y: 2223, w: 1005, h: 1005}
+    { x: 125, y: 123, w: 940, h: 940},
+    { x: 126, y: 1173, w: 940, h: 940},
+    { x: 126, y: 2223, w: 940, h: 940}
   ];
 
   photos.forEach((src, i) => {
@@ -80,6 +77,9 @@ function drawTemplate() {
       ctx.drawImage(img, slots[i].x, slots[i].y, 800, 800);
     };
   });
+
+  // Show canvas
+  canvas.style.display = "block";
 }
 
 // Button
