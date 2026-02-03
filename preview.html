@@ -105,12 +105,19 @@
 
     // QR CODE BUTTON
     document.getElementById("qrBtn").onclick = () => {
-      const canvas = document.getElementById("qrCanvas");
-      canvas.style.display = "block";
-      QRCode.toCanvas(canvas, data, { width: 250 }, function (error) {
+  const canvas = document.getElementById("qrCanvas");
+  canvas.style.display = "block";
+
+  // Convert data URL to a Blob URL (safer for QR code)
+  fetch(data)
+    .then(res => res.blob())
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      QRCode.toCanvas(canvas, blobUrl, { width: 250 }, function (error) {
         if (error) console.error(error);
       });
-    };
+    });
+};
 
     // RETAKE BUTTON
     document.getElementById("retakeBtn").onclick = () => {

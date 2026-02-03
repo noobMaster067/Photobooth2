@@ -1,4 +1,4 @@
-alert("QR test 0.2");
+alert("QR test 0.3");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
