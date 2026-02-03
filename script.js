@@ -1,4 +1,4 @@
-alert("slot test 3.1");
+alert("slot test 3.2");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -74,7 +74,16 @@ function drawTemplate() {
     const img = new Image();
     img.src = src;
     img.onload = () => {
-      ctx.drawImage(img, slots[i].x, slots[i].y, 940, 940);
+      const size = Math.min(img.width, img.height);
+const sx = (img.width - size) / 2;
+const sy = (img.height - size) / 2;
+
+ctx.drawImage(
+  img,
+  sx, sy, size, size,                 // source crop
+  slots[i].x, slots[i].y,              // destination
+  slots[i].w, slots[i].h               // final size
+);
     };
   });
 
