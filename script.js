@@ -1,4 +1,4 @@
-alert("slot test 3.2");
+alert("test 3.3");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -87,8 +87,11 @@ ctx.drawImage(
     };
   });
 
-  // Show canvas
-  canvas.style.display = "flex";
+  const finalImage = canvas.toDataURL("image/png");
+sessionStorage.setItem("finalPhoto", finalImage);
+
+// go to preview page
+window.location.href = "preview.html";
 }
 
 // Button
