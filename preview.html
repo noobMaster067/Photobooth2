@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>Photo Preview</title>
 
+  <!-- QRCode library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -17,7 +20,7 @@
     #container {
       display: flex;
       gap: 30px;
-      align-items: center;
+      align-items: flex-start;
     }
 
     #result {
@@ -33,21 +36,22 @@
     }
 
     button {
-      padding: 20px 30px;
+      padding: 15px 25px;
       font-size: 18px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-    }
-
-    #emailBtn {
       background: #4CAF50;
       color: white;
     }
 
     #retakeBtn {
       background: #f44336;
-      color: white;
+    }
+
+    #qrCanvas {
+      display: none;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -57,32 +61,48 @@
     <!-- PHOTO STRIP -->
     <img id="result" />
 
-    <!-- ACTION BUTTONS -->
+    <!-- ACTIONS -->
     <div id="actions">
-      <button id="emailBtn">Email Photo</button>
+      <button id="downloadBtn">Download Photo</button>
+      <button id="qrBtn">Show QR Code</button>
+      <canvas id="qrCanvas"></canvas>
       <button id="retakeBtn">Retake</button>
     </div>
   </div>
 
   <script>
+    // Get the photo strip from sessionStorage
     const img = document.getElementById("result");
     const data = sessionStorage.getItem("finalPhoto");
 
     if (data) {
       img.src = data;
     } else {
-      alert("No photo found. Go back and take photos.");
+      alert("No photo found. Please retake.");
+      window.location.href = "index.html";
     }
 
-    // RETAKE BUTTON
+    // Download button
+    document.getElementById("downloadBtn").onclick = () => {
+      const link = document.createElement("a");
+      link.href = data;
+      link.download = "photo-strip.png";
+      link.click();
+    };
+
+    // QR code button
+    document.getElementById("qrBtn").onclick = () => {
+      const canvas = document.getElementById("qrCanvas");
+      canvas.style.display = "block";
+      QRCode.toCanvas(canvas, data, { width: 250 }, function (error) {
+        if (error) console.error(error);
+      });
+    };
+
+    // Retake button
     document.getElementById("retakeBtn").onclick = () => {
       sessionStorage.clear();
       window.location.href = "index.html";
-    };
-
-    // EMAIL BUTTON (placeholder for now)
-    document.getElementById("emailBtn").onclick = () => {
-      alert("Email feature coming next!");
     };
   </script>
 
