@@ -15,6 +15,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      font-family: sans-serif;
     }
 
     #container {
@@ -23,16 +24,21 @@
       align-items: flex-start;
     }
 
+    /* PHOTO STRIP */
     #result {
       max-height: 90vh;
       max-width: 60vw;
       object-fit: contain;
+      border: 5px solid #fff;
+      border-radius: 12px;
     }
 
+    /* ACTION BUTTONS */
     #actions {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      align-items: stretch;
     }
 
     button {
@@ -43,6 +49,11 @@
       cursor: pointer;
       background: #4CAF50;
       color: white;
+      transition: transform 0.1s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
     }
 
     #retakeBtn {
@@ -52,6 +63,8 @@
     #qrCanvas {
       display: none;
       margin-top: 20px;
+      border: 3px solid #fff;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -71,7 +84,7 @@
   </div>
 
   <script>
-    // Get the photo strip from sessionStorage
+    // Get photo strip from sessionStorage
     const img = document.getElementById("result");
     const data = sessionStorage.getItem("finalPhoto");
 
@@ -79,10 +92,10 @@
       img.src = data;
     } else {
       alert("No photo found. Please retake.");
-      window.location.href = "index.html";
+      window.location.href = "index.html"; // back to camera page
     }
 
-    // Download button
+    // DOWNLOAD BUTTON
     document.getElementById("downloadBtn").onclick = () => {
       const link = document.createElement("a");
       link.href = data;
@@ -90,7 +103,7 @@
       link.click();
     };
 
-    // QR code button
+    // QR CODE BUTTON
     document.getElementById("qrBtn").onclick = () => {
       const canvas = document.getElementById("qrCanvas");
       canvas.style.display = "block";
@@ -99,7 +112,7 @@
       });
     };
 
-    // Retake button
+    // RETAKE BUTTON
     document.getElementById("retakeBtn").onclick = () => {
       sessionStorage.clear();
       window.location.href = "index.html";
