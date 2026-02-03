@@ -1,4 +1,4 @@
-alert("test 3.4");
+alert("test 3.5");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
