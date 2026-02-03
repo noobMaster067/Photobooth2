@@ -1,4 +1,4 @@
-alert("test 3.7");
+alert("email test 0.1");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
