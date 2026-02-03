@@ -1,4 +1,4 @@
-alert("test 3.3");
+alert("test 3.4");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -57,41 +57,47 @@ function startSession(photoIndex = 0) {
 
 // Draw result
 function drawTemplate() {
-  // FORCE canvas size
   canvas.width = 1200;
   canvas.height = 3600;
 
-  // Draw template
-  ctx.drawImage(template, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
   const slots = [
-    { x: 129, y: 120, w: 940, h: 940},
-    { x: 129, y: 1170, w: 940, h: 940},
-    { x: 129, y: 2220, w: 940, h: 940}
+    { x: 129, y: 120, w: 940, h: 940 },
+    { x: 129, y: 1170, w: 940, h: 940 },
+    { x: 129, y: 2220, w: 940, h: 940 }
   ];
+
+  let loadedCount = 0;
 
   photos.forEach((src, i) => {
     const img = new Image();
     img.src = src;
-    img.onload = () => {
-      const size = Math.min(img.width, img.height);
-const sx = (img.width - size) / 2;
-const sy = (img.height - size) / 2;
 
-ctx.drawImage(
-  img,
-  sx, sy, size, size,                 // source crop
-  slots[i].x, slots[i].y,              // destination
-  slots[i].w, slots[i].h               // final size
-);
+    img.onload = () => {
+      // crop to square (no squish)
+      const size = Math.min(img.width, img.height);
+      const sx = (img.width - size) / 2;
+      const sy = (img.height - size) / 2;
+
+      ctx.drawImage(
+        img,
+        sx, sy, size, size,
+        slots[i].x, slots[i].y,
+        slots[i].w, slots[i].h
+      );
+
+      loadedCount++;
+
+      // ✅ ONLY redirect when ALL photos are drawn
+      if (loadedCount === photos.length) {
+        const finalImage = canvas.toDataURL("image/png");
+        sessionStorage.setItem("finalPhoto", finalImage);
+        window.location.href = "preview.html";
+      }
     };
   });
-
-  const finalImage = canvas.toDataURL("image/png");
-sessionStorage.setItem("finalPhoto", finalImage);
-
-// go to preview page
-window.location.href = "preview.html";
 }
 
 // Button
