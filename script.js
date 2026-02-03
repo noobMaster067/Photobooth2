@@ -1,4 +1,4 @@
-alert("test 3.5");
+alert("test 3.6");
 
 const video = document.getElementById("camera");
 const canvas = document.getElementById("canvas");
@@ -27,7 +27,14 @@ function capturePhoto() {
   const tempCanvas = document.createElement("canvas");
   tempCanvas.width = video.videoWidth;
   tempCanvas.height = video.videoHeight;
-  tempCanvas.getContext("2d").drawImage(video, 0, 0);
+
+  const tctx = tempCanvas.getContext("2d");
+
+  // Mirror capture (same as preview)
+  tctx.translate(tempCanvas.width, 0);
+  tctx.scale(-1, 1);
+  tctx.drawImage(video, 0, 0);
+
   photos.push(tempCanvas.toDataURL("image/png"));
 }
 
